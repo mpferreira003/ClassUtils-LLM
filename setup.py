@@ -5,24 +5,18 @@ setup(
     version="0.1.0",
     packages=find_packages(),
     install_requires=[
-        # Lista de dependências, por exemplo:
-        "numpy>=1.13.3",
-        "torch>=0.4.0",
-        "openai==0.28",
-        "sentence-transformers>3.0.1",
-        "tensorflow>=2.15.0",
-        "scikit-learn>=1.2.2"
+        "numpy",
+        "openai",
+        "sentence-transformers",
+        "tensorflow",
+        "matplotlib",
+        "scikit-learn"
     ],
-    author="Seu Nome",
-    author_email="seuemail@exemplo.com",
-    description="Uma biblioteca de exemplo",
+    author="Miguel Prates",
+    author_email="miguelprates.ferreira@gmail.com",
+    description="Biblioteca para análise de risco usando LLM",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url="https://github.com/seuusuario/minha_biblioteca",
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
-    python_requires='>=3.6',
+    url="https://github.com/mpferreira003/RCL",
+    license='LICENSE.txt',
 )
