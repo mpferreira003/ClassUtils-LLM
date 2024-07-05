@@ -9,7 +9,7 @@ setup(
         "numpy>=1.13.3",
         "torch>=0.4.0",
         "openai==0.28",
-        "sentence-transformers>3.0.1"
+        "sentence-transformers>3.0.1",
         "tensorflow>=2.15.0",
         "scikit-learn>=1.2.2"
     ],
