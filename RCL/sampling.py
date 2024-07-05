@@ -46,7 +46,7 @@ def sampling_kborder(embeddings,k,n_clusters,random_state=None):
   """
   kmeans = KMeans(n_clusters=n_clusters,n_init='auto',random_state=random_state).fit(embeddings)
 
-  max_data = np.max(np.unique(kmeans.labels_,return_counts=True)[1])+3
+  max_data = np.max(np.unique(kmeans.labels_,return_counts=True)[1])
   nearest_neighbors = NearestNeighbors(n_neighbors=max_data,algorithm='ball_tree').fit(embeddings)
   _, representative_docs_ids = nearest_neighbors.kneighbors(kmeans.cluster_centers_)
 
