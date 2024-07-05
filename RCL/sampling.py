@@ -33,7 +33,7 @@ def sampling_knear(embeddings,k,n_clusters,random_state=None):
 def sampling_kborder(embeddings,k,n_clusters,random_state=None):
   """
   Apply KMeans and obtain the indices from the 'k' points further 
-  to each cluster
+  to each cluster (they don't belong to cluster)
   
   Args:
     embeddings - (np.ndarray): Embeddings to extract the sampless
@@ -46,22 +46,17 @@ def sampling_kborder(embeddings,k,n_clusters,random_state=None):
   """
   kmeans = KMeans(n_clusters=n_clusters,n_init='auto',random_state=random_state).fit(embeddings)
 
-  max_data = np.max(np.unique(kmeans.labels_,return_counts=True)[1])
-  nearest_neighbors = NearestNeighbors(n_neighbors=max_data,algorithm='ball_tree').fit(embeddings)
-  _, representative_docs_ids = nearest_neighbors.kneighbors(kmeans.cluster_centers_)
-
-  representative_k = [[] for cluster_id in range(len(kmeans.cluster_centers_))]
-  for cluster_id in range(len(kmeans.cluster_centers_)):
-    aux = []
-    for doc_id in representative_docs_ids[cluster_id][::-1]:
-      if kmeans.labels_[doc_id] == cluster_id:
-        aux.append(doc_id)
-      if len(aux)<=k:
-        break
-
-  representative_docs_ids_k = []
-  for ids in representative_k: representative_docs_ids_k.extend(ids[0:])
-  return representative_docs_ids_k
+  max_data_by_cluster = np.unique(kmeans.labels_,return_counts=True)[1]
+  
+  all_borders_ids = []
+  for cluster_id in range(n_clusters):
+    nearest_neighbors = NearestNeighbors(n_neighbors=max_data_by_cluster[cluster_id]+k,algorithm='ball_tree').fit(embeddings)
+    _, docs_ids = nearest_neighbors.kneighbors([kmeans.cluster_centers_[cluster_id]])
+    docs_ids = docs_ids[0]
+    borders_ids = docs_ids[::-1]
+    # print(f"representative_borders_ids: {borders_ids[:k]}       --->>> {[kmeans.labels_[i] for i in borders_ids[:k]]}")
+    all_borders_ids.extend(borders_ids[:k])
+  return all_borders_ids
 
 
 def sampling_krandom(len_data,k):
