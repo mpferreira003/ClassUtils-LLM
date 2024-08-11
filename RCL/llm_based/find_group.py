@@ -1,14 +1,14 @@
-from .utils import docs2string
 from .tasks import txt_find_group
-from enum import Enum
 def itBelongs(doc,groups,llm_query,LLM_MAXCHAR_PER_REQ=None):
   """
   Extract top-n taxonomy from a list of documents
   
   Args:
-  doc - string: a document
-  groups - list[str]: os grupos ao qual o documento pode pertencer
-  llm_query - (function): function to answer NLP questions (like LLM API)
+    doc:str - a document
+    groups:list[str] - os grupos ao qual o documento pode pertencer
+    llm_query:func(str) - function that communicates with API
+  Returns:
+    output:str - llm's answer
   """
   
   ## Construção da pergunta para a llm

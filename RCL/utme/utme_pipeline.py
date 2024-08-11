@@ -7,8 +7,24 @@ from utme.SubcategoryGenerator import SubcategoryGenerator
 
 
 def utme_pipeline(df,indexes,taxonomy,context,utme_base,
-                  expansion_sample_size=10):
+                  expansion_sample_size=10,):
+  """
+  Function responsible for making a streamlined UTME pipeline.
   
+  Args:
+    df:pd.Dataframe - dataframe in which the utme will be taken
+      --> in this dataframe, there must be a column called 'text'
+    indexes:list[int] - list of indexes that the utme will act on
+    context:str - context extracted with powerful llm
+    utme_base - utme instance
+    expansion_sample_size:int [default=10] - expansion scale used in the process
+  
+  Returns:
+    df_filtered_level2:pd.Dataframe - dataframe that includes the columns:
+      y_pred - relative to the prediction made by BinaryClassifier
+      level1 - level1 prediction
+      level2 - level2 prediction
+  """
   # Filtra apenas os de interesse
   df_filtered = df.iloc[indexes]
   

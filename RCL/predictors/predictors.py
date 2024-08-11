@@ -4,12 +4,38 @@ import numpy as np
 from enum import Enum
 
 def run_bertPred(trainX,trainY,embeddings,**kwargs):
+    """
+    Call a BertPredictor, compile, fit it and predict
+    Args:
+        trainX:list[str] - train data texts
+        trainY:list[int] - train data labels
+        embeddings:list[str] - all the data text
+        kwargs:
+            --> it needs 'num_labels' (int)
+            --> it needs 'epochs' (int)
+    
+    Returns:
+        :list[int] - predicted labels 
+    """
     pred = BertPredictor(num_labels=kwargs['num_labels'])
     pred.compile()
     pred.fit(trainX,trainY,epochs=kwargs['epochs'])
     return pred.predict(embeddings)
     
 def run_mlPred(trainX_idxs,trainY,embeddings,**kwargs):
+    """
+    Call a MustLink, fit it and predict
+    Args:
+        trainX_idxs:list[int] - indices of train embeddings
+        trainY:list[int] - train data labels
+        embeddings:np.ndarray - all the data
+        kwargs:
+            --> it needs 'max_iters' (int)
+            --> it needs 'tol' (float)
+    
+    Returns:
+        :list[int] - predicted labels 
+    """
     ml = []
     uniques = np.unique(trainY)
     for label in uniques:
@@ -28,6 +54,17 @@ class methods(Enum):
 
 
 def predictor(amostrasXidx,amostrasY,embeddings,method=methods.PURE_BERT,**kwargs):
+    """
+    Main funtion for prediction
+    Args:
+        amostrasXidx:list[int] - indices of embeddings for training
+        amostrasY:list[int] - labels of training
+        embeddings - all the data
+        method:methods [default = methods.PURE_BERT] - method to be used
+        kwargs: depends of choosed method
+    Returns:
+        :list[int] - the predicted labels
+    """
     if method==methods.PURE_BERT:
         return run_bertPred([embeddings[idx] for idx in amostrasXidx],
                      amostrasY,embeddings,**kwargs)

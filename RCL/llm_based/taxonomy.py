@@ -6,9 +6,11 @@ def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None):
   Extract top-n taxonomy from a list of documents
   
   Args:
-  docs - (list[string]): list of documents to extract the taxonomy
-  n_taxonomy - (int): quantity of taxonomy that would be generated
-  llm_query - (function): function to answer NLP questions (like LLM API)
+    docs:list[string] - list of documents to extract the taxonomy
+    llm_query:func(str) - function that communicates with API
+    n_taxonomy:int - quantity of taxonomy that would be generated
+  Returns:
+    taxonomy:str - contains a list of the generated taxonomies
   """
 
   ## Construção da pergunta para a llm
@@ -38,6 +40,16 @@ class methods(Enum):
   SPLIT2 = 0
 
 def taxonomy(docs,llm_query,n_taxonomy,method=methods.SPLIT2):
+    """
+    Main function for taxonomy extraction
+    Args:
+      docs:list[string] - list of documents to extract the taxonomy
+      llm_query:func(str) - function that communicates with API
+      n_taxonomy:int - quantity of taxonomy that would be generated
+      method:methods [default = methods.SPLIT2] - choosed method
+    Returns:
+      taxonomy:str - contains a list of the generated taxonomies
+    """
     if methods.SPLIT2==method:
         return taxonomy_2split(docs,llm_query,n_taxonomy)
     else:

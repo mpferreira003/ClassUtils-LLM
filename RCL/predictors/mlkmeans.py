@@ -1,5 +1,8 @@
 import numpy as np
 class UnionFind:
+    """
+    Implementation of Union Find 
+    """
     def __init__(self, n):
         self.parent = list(range(n + 1))  # Inicializar com n + 1 elementos
 
@@ -7,7 +10,7 @@ class UnionFind:
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
-
+    
     def union(self, x, y):
         root_x = self.find(x)
         root_y = self.find(y)
@@ -53,14 +56,36 @@ def group_antimapping(groups): ## retorna um dicionário que relaciona cada item
 
 
 class MustLinkKMeans():
-    def __init__(self, n_clusters, max_iters=0, tol=1e-4, random_state=None,cluster_centers=None):
+    """
+    Kmeans constraint implementation but only with mustlink. The method considers
+    groups of the same labels can be simplified as a single point (the centroid), 
+    these groups are used in KMeans.
+    """
+    def __init__(self, n_clusters, random_state=None,cluster_centers=None):
+        """
+        Init function
+        
+        Args:
+          n_clusters:int - number of clusters in KMeans
+          
+          
+        """
         self.n_clusters = n_clusters
-        self.max_iters = max_iters
-        self.tol = tol
         self.random_state = random_state
         self.cluster_centers_ = cluster_centers
-
-    def fit(self, X,ml=[]):
+    
+    def fit(self, X,ml=[], max_iters=0, tol=1e-4):
+        """
+        Fit function
+        
+        Args:
+          X:np.ndarray - data to apply the clustering
+          ml:list[tuple[int,int]] - must link connections by indices. Like:
+            ml = [(0,1),(1,2) ...] means that label[0] must be equal of
+            label[1] and label[2] must be equal of label[1]
+          max_iters:int [default = 0] = number of iterations in the fit
+          tol [not implemented yet]
+        """
         # print("X shape: ",X.shape)
         if self.random_state:
             np.random.seed(self.random_state)
@@ -114,7 +139,7 @@ class MustLinkKMeans():
 
 
         ## Fazendo o KMeans de fato
-        for i in range(self.max_iters):
+        for i in range(max_iters):
             # Cálculo das distâncias de cada ponto a cada cluster
             distances = np.linalg.norm(X_excluded[:, np.newaxis] - self.cluster_centers_, axis=2)
 
@@ -129,7 +154,7 @@ class MustLinkKMeans():
 
             # Verificar convergência
             # print(f"new_centers: {new_centers.shape}  self.cluster_centers_: {self.cluster_centers_.shape}\n\n")
-            # if np.linalg.norm(new_centers - self.cluster_centers_) < self.tol:
+            # if np.linalg.norm(new_centers - self.cluster_centers_) < tol:
             #     print(f"Break de convergência ativado na {i} iteração!!!")
             #     break
 

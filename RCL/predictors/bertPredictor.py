@@ -15,9 +15,28 @@ class BertPredictor():
                   optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=3e-5),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=[tf.keras.metrics.SparseCategoricalAccuracy()]):
+    """
+    Compilation function
+    Args:
+      optimizer [default = tf.keras.optimizers.legacy.Adam(learning_rate=3e-5)]
+      loss [default = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)]
+      metrics [default = [tf.keras.metrics.SparseCategoricalAccuracy()])]
+    """
     self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
     if self.verbose:self.model.summary()
   def __preprocess__(self,texts,labels=None,max_length=128):
+    """
+    Function to do the preprocess step, applying tokenization
+    
+    Args:
+      texts:list[str]
+      labels:list[int] [default = None] - text labels
+      max_length:int - parameter of tokenization
+  
+    Returns:
+      inputs_ids - tf inputs ids
+      attention_masks - tf attention masks
+    """
     input_ids = []
     attention_masks = []
     for text in texts:
@@ -39,7 +58,7 @@ class BertPredictor():
       labels = tf.convert_to_tensor(labels)
       return input_ids, attention_masks, labels
     return input_ids,attention_masks
-
+  
   def fit(self,X,Y,
           epochs=10,
           batch_size=8,
@@ -49,6 +68,20 @@ class BertPredictor():
           ],
           validation_data = None# colocar como [X,Y]
           ):
+    """
+    Finetuning function
+    
+    Args:
+      X:list[str] - data to training
+      Y:list[int] - labels of data
+      epochs:int - number of epochs
+      batch_size:int - batch size
+      callbacks:list [default = [EarlyStopping, ReduceLROnPlateau]] - list of callback events
+      validation_data:tuple(X,Y) [default=None] - put X and Y validation data if you want
+    
+    Returns:
+      history - the history of the training
+    """
 
     train_input_ids,train_attention_masks,train_labels = self.__preprocess__(X,Y)
 
@@ -74,12 +107,26 @@ class BertPredictor():
 
   @staticmethod
   def plot_history(history):
+    """
+    Plot the history of training
+    Args:
+      history - the history of fit process
+    """
     for key in history.history.keys():
       plt.plot(history.history[key], label=key)
     plt.legend()
     plt.show()
 
   def predict(self,X):
+    """
+    Predict function
+    
+    Args:
+      X:list[str] - text data to predict labels
+    
+    Returns:
+      predicted_labels:list[int] - predicted labels 
+    """
     input_ids, attention_masks = self.__preprocess__(X)
     predictions = self.model.predict([input_ids, attention_masks])
     predicted_labels = np.argmax(predictions.logits, axis=1)
