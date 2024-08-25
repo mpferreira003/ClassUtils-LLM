@@ -1,24 +1,22 @@
 from setuptools import setup, find_packages
-from pkg_resources import parse_requirements
-
-# Parse requirements from requirements.txt
-with open('requirements.txt') as f:
-    requirements = list(parse_requirements(f))
-
-# Extraindo as strings de dependências
-install_requires = [str(req) for req in requirements]
-
 
 setup(
-    name="ClassUtils-LLM",
+    name="ClassUtilsLLM",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=install_requires,
+    install_requires=[
+        "numpy",
+        "openai",
+        "sentence-transformers",
+        "tensorflow",
+        "matplotlib",
+        "scikit-learn"
+    ],
     author="Miguel Prates",
     author_email="miguelprates.ferreira@gmail.com",
-    description="Biblioteca para análise de risco usando LLM",
+    description="Library for analysis with Large Language Models",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url="https://github.com/mpferreira003/RCL",
+    url="https://github.com/mpferreira003/ClassUtilsLLM",
     license='LICENSE.txt',
 )
