@@ -7,7 +7,8 @@ This project was developed as part of a research project on LLMs in collaboratio
 
 The tool was developed to function as a Python library, so it can be installed using:
 ```
-git clone https://github.com/mpferreira003/RCL.git pip install RCL/
+git clone https://github.com/mpferreira003/ClassUtilsLLM.git 
+pip install ClassUtilsLLM/
 ```
 
 Within the project, there is an `examples` folder containing notebooks that demonstrate the use of the tool.
