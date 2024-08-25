@@ -22,7 +22,7 @@ def plot(X,y=None,title=None,ax=None,gt=None,score=adjusted_rand_score):
   if y is None:
     y = np.zeros_like(X[:,0])  # set default labels to 0 for all embeddings
   
-  if ax is None:
+  if ax is not None:
     if title is not None:
       ax.set_title(title)
     if gt is not None:
