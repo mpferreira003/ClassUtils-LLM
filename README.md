@@ -1,14 +1,14 @@
 # Classification Utils by LLM
 ## Motivation
 
-This project was developed as part of a research project on LLMs in collaboration with the [Labic](https://labic.icmc.usp.br) laboratory. The focus is on solving the problem of processing large textual datasets using clustering-based techniques.
+This project was developed as part of a research project on LLMs in collaboration with the [LABIC-ICMC-USP](https://labic.icmc.usp.br) laboratory. The focus is on solving the problem of processing large textual datasets using clustering-based techniques.
 
 ## Installing the Tool
 
 The tool was developed to function as a Python library, so it can be installed using:
-
+```
 git clone https://github.com/mpferreira003/RCL.git pip install RCL/
-
+```
 
 Within the project, there is an `examples` folder containing notebooks that demonstrate the use of the tool.
 
