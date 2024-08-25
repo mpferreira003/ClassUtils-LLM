@@ -1,3 +1,4 @@
+# Classification Utils by LLM
 ## Motivation
 
 This project was developed as part of a research project on LLMs in collaboration with the [Labic](https://labic.icmc.usp.br) laboratory. The focus is on solving the problem of processing large textual datasets using clustering-based techniques.
