@@ -50,3 +50,17 @@ def norm(embeddings,type=normalizers.L2):
         return L2_norm(embeddings)
     else:
         raise ValueError("normalizer's type is invalid")
+
+def clear_embeddings(embeddings):
+    """
+    A function that removes repeated embeddings. Istead of using this 
+    function, you can apply a text comparison between all data to remove 
+    duplicates.
+    
+    Args:
+        embeddings:np.ndarray - embeddings of your text dataset
+    
+    Returns:
+        embeddings_cleared:np.array - embeddings without duplicates
+    """
+    return np.unique(embeddings,axis=0)
