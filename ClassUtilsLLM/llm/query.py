@@ -15,9 +15,11 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
     llm_query:func(str) - a function that communicates with API
       and returns your answer
   """
+  openai.api_llm_key = llm_key
+  openai.api_base = llm_base
+  
   def llm_query(text):
     if return_models:
-      
       response = requests.get(f"{openai.api_base}/models", headers={
           "Authorization": f"Bearer {openai.api_key}"
       })
@@ -26,10 +28,7 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
       else:
           raise ConnectionError(f"Error - Connection error while doing requesting of models")
       
-    else:
-      openai.api_llm_key = llm_key
-      openai.api_base = llm_base
-      
+    else:      
       response = openai.ChatCompletion.create(
           model=model,
           messages = [{"role": "user", "content": text}]
