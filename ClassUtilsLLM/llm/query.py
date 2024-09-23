@@ -19,6 +19,7 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
   
   if return_models:
       openai.api_llm_key = llm_key
+      openai.api_key = llm_key
       openai.api_base = llm_base
       response = requests.get(f"{openai.api_base}/models", headers={
           "Authorization": f"Bearer {openai.api_key}"
@@ -31,6 +32,7 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
   else:
     def llm_query(text):      
         openai.api_llm_key = llm_key
+        openai.api_key = llm_key
         openai.api_base = llm_base
         response = openai.ChatCompletion.create(
             model=model,
