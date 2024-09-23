@@ -17,9 +17,9 @@ def itBelongs(doc,groups,llm_query,LLM_MAXCHAR_PER_REQ=None,task=None):
   else:
     task_txt = task
   ## Construção da pergunta para a llm
-  llm_question = f"@DOCUMENT\n{doc}\n" + \
-                 f"@GROUP\n{'\n'.join([f'{i} - {groups[i]}' for i in range(len(groups))])}" + \
-                 "\n\n===\n" + task_txt
+  llm_question = f"@DOCUMENT\n{doc}\n"
+  llm_question+= f"@GROUP\n{'\n'.join([f'{i} - {groups[i]}' for i in range(len(groups))])}"
+  llm_question+=  "\n\n @TASK: " + task_txt
   
   ## Extração da taxonomia
   output = llm_query(llm_question)
