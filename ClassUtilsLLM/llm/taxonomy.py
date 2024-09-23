@@ -45,7 +45,7 @@ def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None,task=None
 class methods(Enum):
   SPLIT2 = 0
 
-def taxonomy(docs,llm_query,n_taxonomy,method=methods.SPLIT2):
+def taxonomy(docs,llm_query,n_taxonomy,method=methods.SPLIT2,**kwargs):
     """
     Main function for taxonomy extraction
     Args:
@@ -57,6 +57,6 @@ def taxonomy(docs,llm_query,n_taxonomy,method=methods.SPLIT2):
       taxonomy:str - contains a list of the generated taxonomies
     """
     if methods.SPLIT2==method:
-        return taxonomy_2split(docs,llm_query,n_taxonomy)
+        return taxonomy_2split(docs,llm_query,n_taxonomy,**kwargs)
     else:
         raise ValueError("taxonomy's method is invalid")
