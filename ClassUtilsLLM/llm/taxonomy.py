@@ -1,7 +1,7 @@
 from .utils import docs2string
 from .tasks import txt_get_taxonomy
 from enum import Enum
-def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None):
+def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None,task=None):
   """
   Extract top-n taxonomy from a list of documents
   
@@ -9,14 +9,20 @@ def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None):
     docs:list[string] - list of documents to extract the taxonomy
     llm_query:func(str) - function that communicates with API
     n_taxonomy:int - quantity of taxonomy that would be generated
+    task:func(str,str)->str [default = None] - may receive a function that 
+      returns the prompt to llm. 
+      Example: task=lambda docs,n: f'documents:\n{docs}\n\n task: tell me how many taxonomies are in the documents.'
+      By default, the prompt is given by the 'txt_get_taxonomy' function in tasks.py 
   Returns:
     taxonomy:str - contains a list of the generated taxonomies
   """
-
+  
   ## Construção da pergunta para a llm
   documents_txt = docs2string(docs)
-  task = txt_get_taxonomy(n_taxonomy)
-  llm_question = documents_txt + "\n\n===\n" + task
+  if task is None:
+    llm_question = txt_get_taxonomy(documents_txt,n_taxonomy)
+  else:
+    llm_question = task(documents_txt,n_taxonomy)
   
   if LLM_MAXCHAR_PER_REQ is not None:
     if len(llm_question)>LLM_MAXCHAR_PER_REQ:

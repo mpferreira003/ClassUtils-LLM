@@ -2,8 +2,9 @@
 File that controls que texts used to send prompts to the llm
 """
 
+
 ## taxonomy prompts
-txt_get_taxonomy = lambda n_taxonomy: 'Generate the top-{n_taxonomy} topics using the content from @DOCUMENTS. The output must be listed and enumerated.'
+txt_get_taxonomy = lambda documents,n_taxonomy: '@DOCUMENTS\n{documents}\n\n@TASK: Generate the top-{n_taxonomy} topics using the content from @DOCUMENTS. The output must be listed and enumerated.'
 
 
 ## resume prompts

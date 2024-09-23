@@ -7,7 +7,7 @@ def format_subtopic(subtopic):
     return formatted_subtopic
 
 def docs2string(docs):
-  documents_txt = '@DOCUMENTS = '
+  documents_txt = ''
   for doc in docs:
     documents_txt += f'{doc}\n'
   return documents_txt
