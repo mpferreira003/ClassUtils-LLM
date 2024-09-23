@@ -31,6 +31,8 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
       
   else:
     def llm_query(text):      
+        openai.api_llm_key = llm_key
+        openai.api_base = llm_base
         response = openai.ChatCompletion.create(
             model=model,
             messages = [{"role": "user", "content": text}]
