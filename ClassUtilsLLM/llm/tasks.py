@@ -19,6 +19,6 @@ txt_context_summarize = 'Summarize the @TAXONOMY in a context paragraph, using s
 ## find group prompts
 def txt_find_group(doc,groups):
     llm_question = f"@DOCUMENT\n{doc}\n"
-    llm_question+= f"@GROUP\n{'\n'.join([f'{i} - {groups[i]}' for i in range(len(groups))])}"
+    llm_question+= "@GROUP\n{}".format('\n'.join([f'{i} - {groups[i]}' for i in range(len(groups))]))
     llm_question+=  "\n\n @TASK: " + "Choose one of the group's id from @GROUP that has most similarity between @DOCUMENT"
     return llm_question
