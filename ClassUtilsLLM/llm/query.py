@@ -10,7 +10,8 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
     llm_key - key to acess the API
     return_models [default=False] - instead of returning llm_query, the function returns
       wich 'models' are available. I strongly suggest to use this if you don't known 
-      the name of the field 'model' (check for the value of key 'data' of the returned json)
+      the name of the field 'model' (check for the value of key 'data' of the returned json
+      and then the 'ids' for each dict in the list)
   Returns:
     llm_query:func(str) - a function that communicates with API
       and returns your answer
