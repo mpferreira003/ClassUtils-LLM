@@ -16,11 +16,10 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
     llm_query:func(str) - a function that communicates with API
       and returns your answer
   """
-  openai.api_llm_key = llm_key
-  openai.api_base = llm_base
-  
   
   if return_models:
+      openai.api_llm_key = llm_key
+      openai.api_base = llm_base
       response = requests.get(f"{openai.api_base}/models", headers={
           "Authorization": f"Bearer {openai.api_key}"
       })
