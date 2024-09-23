@@ -17,4 +17,8 @@ txt_resume_2severer = lambda n_taxonomy: 'create a top-{n_taxonomy} list with th
 txt_context_summarize = 'Summarize the @TAXONOMY in a context paragraph, using short expressions and keywords. Remove 0 NONE.'
 
 ## find group prompts
-txt_find_group = "Choose one of the group's id from @GROUP that has most similarity between @DOCUMENT"
+def txt_find_group(doc,groups):
+    llm_question = f"@DOCUMENT\n{doc}\n"
+    llm_question+= f"@GROUP\n{'\n'.join([f'{i} - {groups[i]}' for i in range(len(groups))])}"
+    llm_question+=  "\n\n @TASK: " + "Choose one of the group's id from @GROUP that has most similarity between @DOCUMENT"
+    return llm_question
