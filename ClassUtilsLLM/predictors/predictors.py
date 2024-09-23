@@ -1,5 +1,5 @@
-from bertPredictor import BertPredictor
-from mlkmeans import MustLinkKMeans
+from .bertPredictor import BertPredictor
+from .mlkmeans import MustLinkKMeans
 import numpy as np
 from enum import Enum
 
