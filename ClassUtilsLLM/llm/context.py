@@ -12,13 +12,13 @@ def context_summarize(taxonomy,llm_query):
   """
   taxonomy_txt = '@TAXONOMY: ' + taxonomy
   text = taxonomy_txt + "\n\n===\n" + txt_context_summarize
-  output = llm_query(text)[0]
+  output = llm_query(text)
   return output
 
 class methods(Enum):
   SUMMARIZE=0
 
-def context(taxonomy,llm_qurery,method=methods.SUMMARIZE):
+def context(taxonomy,llm_query,method=methods.SUMMARIZE):
     """
     Main function to get the context
     Args:
@@ -29,6 +29,6 @@ def context(taxonomy,llm_qurery,method=methods.SUMMARIZE):
       :str - context of taxonomies
     """
     if methods.SUMMARIZE==method:
-        return context_summarize(taxonomy,llm_qurery)
+        return context_summarize(taxonomy,llm_query)
     else:
         raise ValueError("context's method is invalid")

@@ -59,7 +59,6 @@ def itBelongs(doc,groups,llm_query,task=None,verbose=False):
   
   ## Achando o grupo
   output = llm_query(llm_question)
-  output = '\n'.join(output)
   if verbose:
     print(f"llm_output: {output}")
   

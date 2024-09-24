@@ -40,8 +40,7 @@ def create_llm_query(llm_base,llm_key,model,return_models=False):
         
         )
         s = response['choices'][0]['message']['content'].split("\n")
-        
-        return s
+        return '\n'.join(s)
     return llm_query
 
 def create_llm_request_query(api_url):
