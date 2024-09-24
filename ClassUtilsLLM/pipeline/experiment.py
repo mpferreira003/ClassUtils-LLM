@@ -50,15 +50,15 @@ class Experiment():
         
         ## Taxonomy
         sampled_docs = [docs[sample] for sample in self.samples]
-        self.taxonomy = taxonomy_f(sampled_docs,self.llm_query,
+        self.taxonomy = taxonomy_f(sampled_docs,llm_query,
                        n_taxonomy=Tkwargs['n_taxonomy'],method=mT)
         
         ## Resume
-        self.resume = resume_f(self.taxonomy,self.llm_query,
+        self.resume = resume_f(self.taxonomy,llm_query,
                      n_taxonomy=Rkwargs['n_taxonomy'],method=mR)
         
         ## Context
-        self.context = context_f(self.taxonomy, self.llm_query, method=mC)
+        self.context = context_f(self.taxonomy, llm_query, method=mC)
         
         
         
@@ -81,7 +81,7 @@ class Experiment():
         #                    n_clusters=Skwargs['n_clusters'])
         
         # most_representatives_docs = [docs[idx] for idx in most_representatives]
-        # samples_Y = [itBelongs(docs[s],most_representatives_docs,self.llm_query) for s in samples]
+        # samples_Y = [itBelongs(docs[s],most_representatives_docs,llm_query) for s in samples]
         
         # self.prediction = predictor(samples,samples_Y,embeddings)
         
