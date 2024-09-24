@@ -51,7 +51,7 @@ def norm(embeddings,type=normalizers.L2):
     else:
         raise ValueError("normalizer's type is invalid")
 
-def clear_embeddings(embeddings):
+def remove_duplicates(embeddings,return_index=False):
     """
     A function that removes repeated embeddings. Istead of using this 
     function, you can apply a text comparison between all data to remove 
@@ -59,8 +59,13 @@ def clear_embeddings(embeddings):
     
     Args:
         embeddings:np.ndarray - embeddings of your text dataset
-    
+        return_index:bool [default = False] - return the indexes that you must
+            keep in the dataset to remove the duplicates
     Returns:
-        embeddings_cleared:np.array - embeddings without duplicates
+        embeddings_cleared:np.array - embeddings without duplicates (only if return_index==False)
+        indexes:int - indexes you must keep to remove duplicates (only if return_index==True)
     """
-    return np.unique(embeddings,axis=0)
+    if return_index:
+        return np.unique(embeddings,axis=0,return_index=return_index)[1]
+    else:
+        return np.unique(embeddings,axis=0,return_index=True)
