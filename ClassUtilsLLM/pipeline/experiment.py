@@ -12,7 +12,7 @@ from ..predictors.predictors import predictor
 import datetime
 
 class Experiment():
-    def __init__(self,config,llm_base,llm_key):
+    def __init__(self,config):
         """
         Init function
         
@@ -23,20 +23,16 @@ class Experiment():
                 dict must be the following keys: 'sampling','taxonomy', 
                 'resume', 'context', 'predictor'.
             
-            llm_base:str - an API link to create a connection to llm
-            llm_key:str - the password to use the llm
         """
-        self.config=config
-        self.llm_base=llm_base
-        self.llm_key=llm_key        
-        self.llm_query=create_llm_query(llm_base,llm_key)
-    def run(self,embeddings,docs):
+        self.config=config   
+    def run(self,embeddings,docs,llm_query):
         """
         Method to run all the steps in sequence
         
         Args:
             embeddings:np.ndarray - all embeddings of the documents of your dataset
             docs:list[str] - all documents of your dataset
+            llm_query:func(str)->str - function to query to llm's API
         """
         self.datetime_begin = datetime.datetime.now()
         
