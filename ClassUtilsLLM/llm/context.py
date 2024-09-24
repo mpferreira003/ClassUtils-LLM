@@ -11,7 +11,7 @@ def context_summarize(taxonomy,llm_query):
     output:str - the answer of llm
   """
   taxonomy_txt = '@TAXONOMY: ' + taxonomy
-  text = taxonomy_txt + "\n\n===\n" + txt_context_summarize
+  text = taxonomy_txt + "\n\n@TASK: " + txt_context_summarize
   output = llm_query(text)
   return output
 

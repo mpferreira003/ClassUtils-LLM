@@ -14,7 +14,7 @@ txt_resume_2severer = lambda n_taxonomy: f'create a top-{n_taxonomy} list with t
 
 
 ## context prompts
-txt_context_summarize = 'Summarize the @TAXONOMY in a context paragraph, using short expressions and keywords. Remove 0 NONE.'
+txt_context_summarize = 'Summarize the @TAXONOMY into a comprehensive topic, in a few words'
 
 ## find group prompts
 def txt_find_group(doc,groups):
