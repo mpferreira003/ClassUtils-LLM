@@ -1,10 +1,10 @@
 ## incomplete yet ##
 from ..sampling import sampling as sampling_f
-from ..llm_based.taxonomy import taxonomy as taxonomy_f
-from ..llm_based.resume import resume as resume_f
-from ..llm_based.context import context as context_f
-from ..llm_based.query import create_llm_query
-# from ..llm_based.find_group import itBelongs
+from ..llm.taxonomy import taxonomy as taxonomy_f
+from ..llm.resume import resume as resume_f
+from ..llm.context import context as context_f
+from ..llm.query import create_llm_query
+# from ..llm.find_group import itBelongs
 from ..predictors.predictors import predictor
 # from utme.UTME import UTME
 # from ..utme.utme_pipeline import utme_pipeline
