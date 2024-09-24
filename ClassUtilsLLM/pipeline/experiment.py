@@ -58,7 +58,7 @@ class Experiment():
                      n_taxonomy=Rkwargs['n_taxonomy'],method=mR)
         
         ## Context
-        self.context = context_f(self.taxonomy, llm_query, method=mC)
+        self.context = context_f(self.resume, llm_query, method=mC)
         
         
         

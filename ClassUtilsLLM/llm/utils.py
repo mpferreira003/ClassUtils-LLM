@@ -8,6 +8,6 @@ def format_subtopic(subtopic):
 
 def docs2string(docs):
   documents_txt = ''
-  for doc in docs:
-    documents_txt += f'{doc}\n'
+  for i,doc in enumerate(docs):
+    documents_txt += f'Document{i}: {doc}\n'
   return documents_txt

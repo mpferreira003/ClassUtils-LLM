@@ -7,7 +7,7 @@ def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None,task=None
   
   Args:
     docs:list[string] - list of documents to extract the taxonomy
-    llm_query:func(str) - function that communicates with API
+    llm_query:func(str)->str - function that communicates with API
     n_taxonomy:int - quantity of taxonomy that would be generated
     task:func(str,str)->str [default = None] - may receive a function that 
       returns the prompt to llm. 
@@ -35,11 +35,11 @@ def taxonomy_2split(docs,llm_query,n_taxonomy,LLM_MAXCHAR_PER_REQ=None,task=None
   
   ## Extração da taxonomia
   output = llm_query(llm_question)
-  taxonomy = '0 NONE'
-  for item in output:
-    v = item.split('.')
-    if len(v) >= 2:
-      if v[0].isnumeric(): taxonomy += "\n"+item.strip()
+  taxonomy = '0 NONE\n'+output
+  # for item in output:
+  #   v = item.split('.')
+  #   if len(v) >= 2:
+  #     if v[0].isnumeric(): taxonomy += "\n"+item.strip()
   return taxonomy
 
 class methods(Enum):

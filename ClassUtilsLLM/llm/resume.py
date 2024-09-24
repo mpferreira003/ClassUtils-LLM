@@ -30,7 +30,7 @@ def resume_2merge(crude_taxonomies, llm_query, n_taxonomy, LLM_MAXCHAR_PER_REQ=N
             sum_of_them = t1 + "\n" + t2
             return resume_2merge(sum_of_them, n_taxonomy, llm_query)
   
-  resumed_taxonomys = '\n'.join(llm_query(llm_txt))
+  resumed_taxonomys = llm_query(llm_txt)
   return resumed_taxonomys
 
 
@@ -65,7 +65,7 @@ def resume_2common(crude_taxonomies, llm_query, n_taxonomy, LLM_MAXCHAR_PER_REQ=
         sum_of_them = t1 + "\n" + t2
         return resume_2common(sum_of_them, n_taxonomy, llm_query)
   
-  resumed_taxonomys = '\n'.join(llm_query(llm_txt))
+  resumed_taxonomys = llm_query(llm_txt)
   return resumed_taxonomys
 
 
@@ -100,7 +100,7 @@ def resume_2severer(crude_taxonomies, llm_query, n_taxonomy, LLM_MAXCHAR_PER_REQ
         sum_of_them = t1 + "\n" + t2
         return resume_2severer(sum_of_them, n_taxonomy, llm_query)
   
-  resumed_taxonomys = '\n'.join(llm_query(llm_txt))
+  resumed_taxonomys = llm_query(llm_txt)
   return resumed_taxonomys
 
 
