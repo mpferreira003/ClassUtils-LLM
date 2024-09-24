@@ -1,17 +1,17 @@
 ## incomplete yet ##
-from ..sampling import sampling,methods
-from ..llm_based.taxonomy import taxonomy
-from ..llm_based.resume import resume
-from ..llm_based.context import context
+from ..sampling import sampling_f
+from ..llm_based.taxonomy import taxonomy as taxonomy_f
+from ..llm_based.resume import resume as resume_f
+from ..llm_based.context import context as context_f
 from ..llm_based.query import create_llm_query
-from ..llm_based.find_group import itBelongs
+# from ..llm_based.find_group import itBelongs
 from ..predictors.predictors import predictor
-from utme.UTME import UTME
-from ..utme.utme_pipeline import utme_pipeline
+# from utme.UTME import UTME
+# from ..utme.utme_pipeline import utme_pipeline
 
 import datetime
 
-class Pipe():
+class Experiment():
     def __init__(self,config,llm_base,llm_key):
         """
         Init function
@@ -33,6 +33,10 @@ class Pipe():
     def run(self,embeddings,docs):
         """
         Method to run all the steps in sequence
+        
+        Args:
+            embeddings:np.ndarray - all embeddings of the documents of your dataset
+            docs:list[str] - all documents of your dataset
         """
         self.datetime_begin = datetime.datetime.now()
         
@@ -41,33 +45,32 @@ class Pipe():
         mR,Rkwargs = self.config['resume']
         mC,Ckwargs = self.config['context']
         mP,Pkwargs = self.config['predictor']
-        hasUTME = ('UTME' in self.config.keys())
-        UTMEkwargs={}
-        if(hasUTME):
-            UTMEkwargs=self.config['UTME']
         
         ## Sampling
-        samples = sampling(embeddings,method=mS,
+        self.samples = sampling_f(embeddings,method=mS,
                            k=Skwargs['k'],
                            n_clusters=Skwargs['n_clusters'])
         
         
         ## Taxonomy
-        sampled_docs = [docs[sample] for sample in samples]
-        tax = taxonomy(sampled_docs,self.llm_query,
+        sampled_docs = [docs[sample] for sample in self.samples]
+        self.taxonomy = taxonomy_f(sampled_docs,self.llm_query,
                        n_taxonomy=Tkwargs['n_taxonomy'],method=mT)
         
         ## Resume
-        res = resume(tax,self.llm_query,
+        self.resume = resume_f(self.taxonomy,self.llm_query,
                      n_taxonomy=Rkwargs['n_taxonomy'],method=mR)
         
         ## Context
-        con = context(tax, self.llm_query, method=mC)
+        self.context = context_f(self.taxonomy, self.llm_query, method=mC)
         
-        print("tax: \n{tax}\n\n")
-        print("res: \n{res}\n\n")
-        print("con: \n{con}\n\n")
         
+        
+        
+        # hasUTME = ('UTME' in self.config.keys())
+        # UTMEkwargs={}
+        # if(hasUTME):
+        #     UTMEkwargs=self.config['UTME']
         ## UTME - group finetunin (FAZER UM REAJUSTE DOS KMEANS !!! CONSIDERANDO O NOME DO TOPICO)
         # llm_options = {'model': "openchat_3.5", 'max_tokens': 1024}
         # utme_base = UTME(self.llm_base, self.llm_key, llm_options)
@@ -84,7 +87,7 @@ class Pipe():
         # most_representatives_docs = [docs[idx] for idx in most_representatives]
         # samples_Y = [itBelongs(docs[s],most_representatives_docs,self.llm_query) for s in samples]
         
-        self.prediction = predictor(samples,samples_Y,embeddings)
+        # self.prediction = predictor(samples,samples_Y,embeddings)
         
         
         self.datetime_final = datetime.datetime.now()
