@@ -34,7 +34,7 @@ def accumulatted_contains(txt,groups):
       break
   return np.argmax(contage_by_group)
 
-def itBelongs(doc,groups,llm_query,LLM_MAXCHAR_PER_REQ=None,task=None):
+def itBelongs(doc,groups,llm_query,task=None,verbose=False):
   """
   Extract top-n taxonomy from a list of documents
   
@@ -45,6 +45,7 @@ def itBelongs(doc,groups,llm_query,LLM_MAXCHAR_PER_REQ=None,task=None):
     task:func(str,str)->str [default = None] - the task function to find the group of the document.
       Example: lambda doc,groups: f'@DOC\n{doc}\n@GROUPS\n@TASK: Which group of @GROUPS do the @DOC belongs?'
       By default, check the 'txt_find_group' from task
+    verbose:bool [default = False] - print crude llm response in terminal
   Returns:
     :int - the index of the group the txt belongs to
   """
@@ -58,6 +59,8 @@ def itBelongs(doc,groups,llm_query,LLM_MAXCHAR_PER_REQ=None,task=None):
   ## Achando o grupo
   output = llm_query(llm_question)
   output = '\n'.join(output)
+  if verbose:
+    print(f"llm_output: {output}")
   
   ## Achando a qual grupo pertence
   return accumulatted_contains(output,groups)
