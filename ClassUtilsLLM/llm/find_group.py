@@ -25,7 +25,7 @@ def group_similarity(txt, groups):
           start = subseq.a
           end = start + subseq.size
           subsequencia = texto[start:end]
-          ratio = difflib.SequenceMatcher(None, subsequencia, B).ratio()
+          ratio = difflib.SequenceMatcher(None, subsequencia, txt).ratio()
           
           if ratio > melhor_ratio:
               melhor_ratio = ratio
