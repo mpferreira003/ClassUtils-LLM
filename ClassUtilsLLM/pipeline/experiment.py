@@ -1,5 +1,5 @@
 ## incomplete yet ##
-from ..sampling import sampling_f
+from ..sampling import sampling as sampling_f
 from ..llm_based.taxonomy import taxonomy as taxonomy_f
 from ..llm_based.resume import resume as resume_f
 from ..llm_based.context import context as context_f
@@ -92,4 +92,3 @@ class Experiment():
         
         self.datetime_final = datetime.datetime.now()
         self.duration_time  = self.datetime_begin-self.datetime_final
-        return self.prediction
