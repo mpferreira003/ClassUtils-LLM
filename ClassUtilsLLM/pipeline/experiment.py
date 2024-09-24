@@ -40,7 +40,7 @@ class Experiment():
         mT,Tkwargs = self.config['taxonomy']
         mR,Rkwargs = self.config['resume']
         mC,Ckwargs = self.config['context']
-        mP,Pkwargs = self.config['predictor']
+        # mP,Pkwargs = self.config['predictor']
         
         ## Sampling
         self.samples = sampling_f(embeddings,method=mS,
