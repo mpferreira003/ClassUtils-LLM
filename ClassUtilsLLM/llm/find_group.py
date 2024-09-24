@@ -4,7 +4,7 @@ import numpy as np
 import re
 import difflib
 
-def encontrar_mais_proxima_substring(txt, groups):
+def group_similarity(txt, groups):
   """
   Function to calculate the '''similarity''' (it's not embedding) 
   between a list of strings and a txt that is the substring of some of them.
@@ -64,4 +64,4 @@ def itBelongs(doc,groups,llm_query,task=None,verbose=False):
     print(f"llm_output: {output}")
   
   ## Achando a qual grupo pertence
-  return accumulatted_contains(output,groups)
+  return group_similarity(output,groups)
