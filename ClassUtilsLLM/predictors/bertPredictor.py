@@ -93,7 +93,7 @@ class BertPredictor():
 
     class_weights = compute_class_weight('balanced', classes=np.unique(train_labels), y=train_labels.numpy())
     self.class_weights_dict = dict(enumerate(class_weights))
-
+    
     self.history = self.model.fit(
         [train_input_ids, train_attention_masks],
         train_labels,
@@ -116,7 +116,7 @@ class BertPredictor():
       plt.plot(history.history[key], label=key)
     plt.legend()
     plt.show()
-
+  
   def predict(self,X):
     """
     Predict function

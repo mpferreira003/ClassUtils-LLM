@@ -3,13 +3,13 @@ from .mlkmeans import MustLinkKMeans
 import numpy as np
 from enum import Enum
 
-def run_bertPred(trainX,trainY,embeddings,**kwargs):
+def run_bertPred(trainX,trainY,all_docs,**kwargs):
     """
     Call a BertPredictor, compile, fit it and predict
     Args:
         trainX:list[str] - train data texts
         trainY:list[int] - train data labels
-        embeddings:list[str] - all the data text
+        all_docs:list[str] - all the data text
         kwargs:
             --> it needs 'num_labels' (int)
             --> it needs 'epochs' (int)
@@ -20,7 +20,7 @@ def run_bertPred(trainX,trainY,embeddings,**kwargs):
     pred = BertPredictor(num_labels=kwargs['num_labels'])
     pred.compile()
     pred.fit(trainX,trainY,epochs=kwargs['epochs'])
-    return pred.predict(embeddings)
+    return pred.predict(all_docs)
     
 def run_mlPred(trainX_idxs,trainY,embeddings,**kwargs):
     """
@@ -53,7 +53,7 @@ class methods(Enum):
     MLKMEANS = 1
 
 
-def predictor(amostrasXidx,amostrasY,embeddings,method=methods.PURE_BERT,**kwargs):
+def predictor(amostrasXidx,amostrasY,embeddings,all_docs,method=methods.PURE_BERT,**kwargs):
     """
     Main funtion for prediction
     Args:
@@ -66,8 +66,7 @@ def predictor(amostrasXidx,amostrasY,embeddings,method=methods.PURE_BERT,**kwarg
         :list[int] - the predicted labels
     """
     if method==methods.PURE_BERT:
-        return run_bertPred([embeddings[idx] for idx in amostrasXidx],
-                     amostrasY,embeddings,**kwargs)
+        return run_bertPred([all_docs[idx] for idx in amostrasXidx],amostrasY,all_docs,**kwargs)
     elif method==methods.MLKMEANS:
         return run_mlPred(amostrasXidx,amostrasY,embeddings,**kwargs)
     else:
