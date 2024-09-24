@@ -2,8 +2,9 @@ from .tasks import txt_find_group
 
 import numpy as np
 import re
+import difflib
 
-def accumulatted_contains(txt,groups):
+def encontrar_mais_proxima_substring(txt, groups):
   """
   Function to calculate the '''similarity''' (it's not embedding) 
   between a list of strings and a txt that is the substring of some of them.
@@ -15,24 +16,24 @@ def accumulatted_contains(txt,groups):
   Returns:
     :int - the index of the group with the most similarity with the txt
   """
-  txt_cleared = re.sub(r'[^\w\s]', '', txt)
+  melhor_ratio = 0
+  idx_melhor_match = None
+  for i,texto in enumerate(groups):
+      sequencias_similares = difflib.SequenceMatcher(None, texto, txt).get_matching_blocks()
+      
+      for subseq in sequencias_similares:
+          start = subseq.a
+          end = start + subseq.size
+          subsequencia = texto[start:end]
+          ratio = difflib.SequenceMatcher(None, subsequencia, B).ratio()
+          
+          if ratio > melhor_ratio:
+              melhor_ratio = ratio
+              idx_melhor_match = i
+  
+  return idx_melhor_match
 
-  contage_by_group = [0]*len(groups)
-  for sublen in range(1,len(txt_cleared)):
-    stop = 0
-    sub_txt = txt_cleared[:sublen]
-    for g in range(len(groups)):
-      if contage_by_group[g] != -1:
-        if sub_txt in groups[g]:
-          contage_by_group[g] += 1
-        else:
-          contage_by_group[g]=-1
-      else:
-        stop+=1
 
-    if stop==len(contage_by_group)-1:
-      break
-  return np.argmax(contage_by_group)
 
 def itBelongs(doc,groups,llm_query,task=None,verbose=False):
   """
