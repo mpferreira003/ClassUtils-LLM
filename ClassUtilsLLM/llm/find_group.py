@@ -35,7 +35,7 @@ def group_similarity(txt, groups):
 
 
 
-def itBelongs(doc,groups,llm_query,task=None,verbose=False):
+def itBelongs(doc,groups,llm_query,task=None,verbose=False,apply_sim=True):
   """
   Extract top-n taxonomy from a list of documents
   
@@ -62,5 +62,8 @@ def itBelongs(doc,groups,llm_query,task=None,verbose=False):
   if verbose:
     print(f"llm_output: {output}")
   
-  ## Achando a qual grupo pertence
-  return group_similarity(output,groups)
+  
+  if apply_sim:
+    return group_similarity(output,groups)
+  else:
+    return output 
