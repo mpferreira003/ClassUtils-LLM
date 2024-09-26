@@ -44,7 +44,7 @@ class BertPredictor():
                             text,
                             add_special_tokens = True,
                             max_length = max_length,
-                            padding = True,
+                            # padding = True,
                             return_attention_mask = True,
                             return_tensors = 'tf',
                        )
