@@ -35,7 +35,7 @@ def plot(X,y=None,title=None,ax=None,gt=None,score=adjusted_rand_score):
       ax.scatter(X[idxs,0],X[idxs,1],alpha=0.5)
   else:
     if title is not None:
-      plt.set_title(title)
+      plt.title(title)
     if gt is not None:
       score = score(gt,y)
       plt.annotate('{:.2}'.format(score), xy=(0.8, 1), xytext=(0, 3),
