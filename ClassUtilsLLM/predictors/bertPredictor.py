@@ -44,7 +44,8 @@ class BertPredictor():
                             text,
                             add_special_tokens = True,
                             max_length = max_length,
-                            # padding = True,
+                            padding = 'max_length',
+                            truncation=True,
                             return_attention_mask = True,
                             return_tensors = 'tf',
                        )
@@ -53,7 +54,7 @@ class BertPredictor():
 
     input_ids = tf.concat(input_ids, axis=0)
     attention_masks = tf.concat(attention_masks, axis=0)
-
+    
     if labels is not None:
       labels = tf.convert_to_tensor(labels)
       return input_ids, attention_masks, labels
