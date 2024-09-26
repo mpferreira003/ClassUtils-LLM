@@ -63,8 +63,8 @@ class BertPredictor():
           epochs=10,
           batch_size=8,
           callbacks = [
-              tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3),
-              tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2)
+              tf.keras.callbacks.EarlyStopping(monitor='sparse_categorical_accuracy', patience=3),
+              tf.keras.callbacks.ReduceLROnPlateau(monitor='sparse_categorical_accuracy', factor=0.2, patience=2)
           ],
           validation_data = None# colocar como [X,Y]
           ):
