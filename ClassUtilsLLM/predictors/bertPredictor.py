@@ -14,7 +14,8 @@ class BertPredictor():
   def compile(self,
                   optimizer=tf.keras.optimizers.legacy.Adam(learning_rate=3e-5),
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                  metrics=[tf.keras.metrics.SparseCategoricalAccuracy()]):
+                  metrics=[tf.keras.metrics.SparseCategoricalAccuracy()],
+                  EarlyStop_patience=9,Plateau_factor=1e-3,Plateau_patience=6):
     """
     Compilation function
     Args:
@@ -24,6 +25,12 @@ class BertPredictor():
     """
     self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
     if self.verbose:self.model.summary()
+    
+    self.callbacks = [
+              tf.keras.callbacks.EarlyStopping(monitor='sparse_categorical_accuracy', patience=EarlyStop_patience),
+              tf.keras.callbacks.ReduceLROnPlateau(monitor='sparse_categorical_accuracy', factor=Plateau_factor, patience=Plateau_patience)
+          ],
+    
   def __preprocess__(self,texts,labels=None,max_length=128):
     """
     Function to do the preprocess step, applying tokenization
@@ -63,10 +70,6 @@ class BertPredictor():
   def fit(self,X,Y,
           epochs=10,
           batch_size=8,
-          callbacks = [
-              tf.keras.callbacks.EarlyStopping(monitor='sparse_categorical_accuracy', patience=9),
-              tf.keras.callbacks.ReduceLROnPlateau(monitor='sparse_categorical_accuracy', factor=0.07, patience=3)
-          ],
           validation_data = None# colocar como [X,Y]
           ):
     """
@@ -101,7 +104,7 @@ class BertPredictor():
         validation_data= None if not run_with_validation else ([test_input_ids, test_attention_masks], test_labels),
         epochs=epochs,  # Número de épocas
         batch_size=batch_size,  # Tamanho do lote
-        callbacks=callbacks,
+        callbacks=self.callbacks,
         class_weight=self.class_weights_dict
     )
     return self.history
